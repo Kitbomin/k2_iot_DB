@@ -65,7 +65,7 @@ DROP TABLE `school`.`students`;
 DROP DATABASE `school`;
 DROP DATABASE `example`;
 DROP DATABASE `example2`;
-DROP DATABASE `example3`;
+-- DROP DATABASE `example3`; 
 # Error Code: 1008. Can't drop database 'example3'; database doesn't exist
 
 
