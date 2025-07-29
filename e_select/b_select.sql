@@ -67,12 +67,74 @@ HAVING count(*) >= 2;
 
 # 지역 평균 포인트가 200이 넘는 지역 조회
 select 
-	area_code, AVG(points) -- 평균값은 실수 반환
+	area_code, AVG(points)
 from 
 	members
 GROUP BY 
 	area_code
 HAVING avg(points) > 200;
+
+
+/*
+	6. ORDER BY
+    : 데이터 정렬
+    - 결과의 값이나 개수에 영향을 미치지 않음
+    - 기본값: ASC(Ascending 오름차순) 
+			DESC(dexcending 내림차순) 
+*/
+
+select * from members; -- 데이터 삽입 순서대로 정렬(auto_increment PK 값에 따라 정렬됨)
+
+select * from members
+ORDER BY
+	join_date; # 과거순 정렬
+    
+select * from members
+ORDER BY
+	name DESC; # 이름 뒷 순 정렬
+    
+    
+# cf) 정렬된 데이터를 기반으로 추가 정렬(콤마로 정렬 상태 나열)
+select * from members
+ORDER BY
+	grade DESC;
+    
+select * from members
+ORDER BY
+	grade DESC, points DESC;
+    
+/*
+	7. LIMIT
+    : 출력하는 개수를 제한 (반환되는 행의 수를 제한)
+    
+    LIMIT 행 수 (offset 시작행)
+    - 첫번째 행의 기본값이 0
+*/
+
+select * from members
+LIMIT 5;
+
+select * from members
+LIMIT 5 OFFSET 2; -- offset 2: 세번째 행부터 출력(인덱스 체계 생각하면 됨)
+
+select * from members
+order by
+	grade desc
+LIMIT 5;
+
+/*
+	cf) DISTINCT (별개의, 뚜렷한)
+    : 중복된 결과를 제거함 
+    - 조회된 결과에서 중복된 데이터를 1개만 남기고 생략해 반환
+	
+    조회할 열 이름 앞에 DISTINCT 키워드 사용
+*/
+
+select area_code from members;
+
+select DISTINCT area_code from members;
+select DISTINCT grade from members;
+
 
 
 
