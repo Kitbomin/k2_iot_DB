@@ -31,7 +31,40 @@
     
 */
 
+# 외부 조인 예제 1 #
+# : 왼쪽 테이블의 모든 레코드오 ㅏ오른쪽 테이블의 매칭되는 레코드만 포함
+SELECT 
+	M.member_id, M.name, P.product_code, M.area_code
+FROM members M -- 모두 출력됨
+LEFT OUTER JOIN 
+		purchases P
+ON M.member_id = P.member_id;
 
+# 외부 조인 예제 2#
+# : 오른쪽 테이블의 내용을 모두 출력 
+SELECT
+	M.member_id, M.name, P.product_code, M.area_code
+FROM
+	purchases P
+RIGHT OUTER JOIN
+	members M
+ON M.member_id = P.member_id;
+
+# 외부 조인 예제 3#
+SELECT M.member_id, P.product_code, M.name, M.contact
+FROM
+	members M -- 기준 테이블 
+    LEFT JOIN purchases P 
+    ON M.member_id = P.member_id
+WHERE P.product_code IS NULL;
+
+# cf) MuSQL은 FULL OUTER JOIN을 지원하지 않음 => UNION으로 대체됨 
+
+## 외부 조인 사용 시 유의 점 ##
+# 1) 기준 테이블의 위치를 잘 파악해야함
+#		- LEFT : 왼쪽 테이블이 기준 (FROM 절에서 선언되는 테이블)
+# 2) OUTER 키워드 생략 가능 
+# 3) IS NULL 조건: 외부 조인 후 일치하지 않는 데이터를 찾을 때 사용 (차집합) 
 
 
 
