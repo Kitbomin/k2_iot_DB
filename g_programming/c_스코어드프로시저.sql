@@ -92,7 +92,7 @@ end ^^
 delimiter ;
 
 call caseProc();
-
+drop procedure caseProc;
 
 
 
