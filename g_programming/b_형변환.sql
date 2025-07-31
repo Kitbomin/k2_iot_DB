@@ -36,6 +36,16 @@ select cast('2025!07*31' as Date);
 
 select convert('07/31/2025', Date); # 이건 NULL이 나옴 -> 형식에서 어긋나기 때문 
 
+# cast 	  : SQL의 표준 
+# convert : MySQL의 고유 문법 
+
+### 2) 묵시적 형 변환
+# : 자동으로 데이터를 변환해주는 것 
+select '100' + '200' ; -- 자동으로 숫자로 읽어서 반환해줌 
+
+# cf) 문자열을 이어서 작성하는 방법 
+# concat('a', 'b') 함수를 사용 
+select concat('100','200');
 
 
 
