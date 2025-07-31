@@ -52,23 +52,85 @@ USE `trigger`;
     delimiter ;
 */
 
+-- 트리거 연습용 테이블 --
+create table if not exists `trigger_table` (
+	id int,
+    txt varchar(10)
+);
+
+insert into `trigger_table` 
+values 
+	(1, '레드벨벳'),
+	(2, '에스파'),
+	(3, '하츠투하츠');
+
+select * from trigger_table;
+
+-- 트리거 생성 
+delimiter $$
+
+create trigger myTrigger 
+	# 트리거 종류 이벤트 종류 
+    after delete -- delete 문이 발생된 이후에 작동함
+    on trigger_table -- 어느 테이블에서 동작할건지? 
+    for each row -- 각 행마다 적용 시킴(모든 행에 트리거 적용) 
+    
+# 실제 트리거에서 작동할 부분 
+begin
+	set @msg = '가수 그룹이 삭제됨' ;
+end $$
+delimiter ;	
 
 
+-- 트리거 사용 테스트 
+set @msg = '' ; -- 변수 초기화 
+
+select @mag;  -- 아무 값도 없음 
+
+# 1) 삽입 테스트
+insert into trigger_table 
+values (4, '아이브');
+
+select @msg;
+
+# 2) 수정 테스트
+update trigger_table
+set txt = '피프티피프티'
+where id = 3;
+
+# cf) id값 PK 설정 
+alter table trigger_table
+modify id int primary key; 
+
+select * from trigger_table;
+desc trigger_table;
+
+select @msg;
+
+# 3) 삭제 테스트
+delete from trigger_table
+where id = 4;
+
+select @msg;
 
 
+## 트리거 VS 트랜잭션 ##
+
+# 1) 트리거 
+#	: 이벤트 발생 시 '자동처리' 됨 
+# 	- INSERT, UPDATE, DELETE 이벤트 발생 시에만 동작 
+#	- 자동실행, 개발자가 직접 제어할 수 없음 
+#   - 사용목적: 자동화된 응답처리, 감시(로그) 
+# 	EX) 게시글 수정 시 로그 자동 기록 등에 사용됨 
 
 
+# 2) 트랜잭션 
+# 	: 여러 작업을 하나의 작업 단위로 원자성 있게 '묶은' 것
+# 	- 개발자가 직접 명시적으로 시작함 
+# 	- COMMIT(적용시점), ROLLBACK(취소) 로 직접 제어 가능 
+# 	- 사용목적: 데이터의 일관성 보장, 오류를 복구하기 위해 사용 
+# 	EX) 주문 처리 중 오류 발생 시 전체 작업 롤백 같은 작업에 사용됨 
 
-
-
-
-
-
-
-
-
-
-
-
+# cf) 원자성 (Atomicity): 모두 성공 또는 모두 실패 (하나라도 실패 시 모두 롤백) => 일관성 유지를 위한 개념 
 
 
