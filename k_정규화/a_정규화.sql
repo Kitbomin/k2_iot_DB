@@ -136,15 +136,46 @@ create table `student_course_connect` (
     foreign key(course_id) references courses(course_id)
 );
 
+insert into students
+values
+	(1, '김세훈'),
+	(2, '권민현'),
+	(3, '안미향');
+
+insert into courses
+values
+	(101, '챗봇', '이승아'),
+	(102, 'ERP', '김준일'),
+	(103, '코리아 IT', '조승범');
+    
+insert into student_course_connect
+values
+	(1, 101), (1, 102), (2,102), (3,103);
+
+select * from students;
+select * from courses;
+select * from student_course_connect;
+
+-- 수강생 없이 새로운 과목만 등록 
+insert into courses values (104, 'SAAS', '안근수');
+# 정상 작동함
+select * from courses;
+
+-- 강사 이름 갱신 (수정)
+update courses set instructor = '김준상' where course_id = 102;
+select * from courses;
+
+-- 수강 정보 삭제 시 학생과 과목에 영향을 미치지 않음 (삭제) 
+delete from student_course_connect where student_id = 3;
+select * from students;
+select * from student_course_connect;
+select * from courses;
+
+### 정규화 사용 모범 사례 ###
+# 정규화가 무조건적인 정답은 아님 
+# : 과도한 정규화는 Join이 많아짐 -> 성능 저하의 우려 발생 (5 정규화 해야함)
+# - 실무에서는 3NF + 일부 반정규화를 조합 (성능과 무결성 사이 균형을 유지해야함) 
 
 
-
-
-
-
-
-
-
-
-
+# cf) 베스트 프렉티스 (best practice) : 특정 문제를 해결하거나 목표를 달성함에 있어서 가장 효과적이고 검증된 방법 
 
